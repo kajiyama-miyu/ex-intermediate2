@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.HotelDomain;
-import com.example.domain.Teams;
+
 
 @Repository
 public class HotelRepository {
@@ -24,7 +24,7 @@ public class HotelRepository {
 		HotelDomain hotel = new HotelDomain();
 		hotel.setId(rs.getInt("id"));
 		hotel.setAreaName(rs.getString("area_name"));
-		hotel.setHotelName(rs.getNString("hotel_name"));
+		hotel.setHotelName(rs.getString("hotel_name"));
 		hotel.setAddress(rs.getString("address"));
 		hotel.setNearestStation(rs.getString("nearest_station"));
 		hotel.setPrice(rs.getInt("price"));
@@ -50,12 +50,11 @@ public class HotelRepository {
 			List<HotelDomain> hotelList = template.query(sql, param, HOTEL_ROW_MAPPER);
 			
 			return  hotelList;
-			
 		}catch (EmptyResultDataAccessException e) {
 			// TODO: handle exception
-			
 			return null;
 		}
+		
 		
 	}
 	

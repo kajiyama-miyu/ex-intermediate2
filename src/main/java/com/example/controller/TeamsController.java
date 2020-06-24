@@ -23,7 +23,7 @@ public class TeamsController {
 		List<Teams> teamList = service.showTeamList();
 		model.addAttribute("teamList", teamList);
 		
-		return "sample";
+		return "baseballTeamList";
 	}
 	
 	
@@ -33,4 +33,6 @@ public class TeamsController {
 		model.addAttribute("teams", teams);
 		return "showDetail";
 	}
+	
+	
 }
