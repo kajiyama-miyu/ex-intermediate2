@@ -44,7 +44,7 @@
 <tr class="odd">
 <th>価格</th>
 <td>
-<span th:text="${clothes.price}"></span>
+<span th:text="${#numbers.formatInteger(clothes.price, 1, 'COMMA')}"></span>
 </td>
 </tr>
 </table>
