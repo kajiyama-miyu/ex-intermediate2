@@ -1,0 +1,22 @@
+@charset"utf-8";
+
+
+#hotelTable, th, td{
+	border-collapse: collapse;
+	border: 2px solid #4682B4;
+	padding-right: 60px;
+}
+
+#hotelTable{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 400px;
+}
+
+.odd{
+	background-color: #F5F5F5;
+}
+
+.even{
+	background-color: #D9E5FF;
+}
