@@ -1,11 +1,13 @@
 package com.example.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,11 +49,16 @@ public class ClothesController {
 	
 	@RequestMapping("/searchClothes")
 	public String searchColothes(ClothesForm clothesForm, Model model) {
-		Clothes clothes = service.searchClothes(clothesForm.getGender(), clothesForm.getColor());
+		List<Clothes> clothesList = service.searchClothes(clothesForm.getGender(), clothesForm.getColor());
 		
-		
-			model.addAttribute("clothes", clothes);
+		if(CollectionUtils.isEmpty(clothesList)) {
+			model.addAttribute("failure", "検索結果は存在しませんでした。");
 			return index(model);
+		}else {
+			model.addAttribute("clothesList", clothesList);
+			return index(model);
+		}
+			
 		
 	}
 	
