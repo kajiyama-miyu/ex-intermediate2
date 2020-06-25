@@ -7,20 +7,47 @@
 </head>
 <body>
 <h2>衣類検索</h2>
-<form action="show-clothes.html" th:action="@{/clothes/searchClothes}" method="post">
+
+<form action="show-clothes.html" th:action="@{/clothes/searchClothes}" method="post" th:object="${clothesForm}">
+<div th:if="${failure}">
+<p th:text="${failure}">
+</div>
 <div class="gender">
 <div th:each = "gender : ${genderMap}">
-	<input type="radio" name="gender" th:value="${gender.key}" th:text="${gender.value}" th:checked="${gender.key== 1}">
+	<input type="radio" name="gender" th:value="${gender.key}" th:text="${gender.value}"  th:checked="${gender.key == 0}" th:field="*{gender}">
 </div>
 </div>
 <div class="color">
 <select name="color" >
-	<option th:each = "color : ${colorMap}" th:value="${color.key}" th:text="${color.value}"></option>
+	<option th:each = "color : ${colorMap}" th:value="${color.key}" th:text="${color.value}" th:field="*{color}"></option>
 </select>
 </div>
+<br>
 <div class="button">
 <button>検索</button>
 </div>
 </form>
+
+<table  id="clotheTable" th:each = "clothes : ${clothesList}">
+<tr class="odd">
+<th >ジャンル</th>
+<td>
+<span th:text="${clothes.genre}"></span>
+</td>
+</tr>
+<tr class="even">
+<th>サイズ</th>
+<td>
+<span th:text="${clothes.size}"></span>
+</td>
+</tr>
+<tr class="odd">
+<th>価格</th>
+<td>
+<span th:text="${clothes.price}"></span>
+</td>
+</tr>
+</table>
+
 </body>
 </html>
