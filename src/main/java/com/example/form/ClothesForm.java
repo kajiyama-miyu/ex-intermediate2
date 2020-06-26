@@ -1,7 +1,11 @@
 package com.example.form;
 
+
+import javax.validation.constraints.NotNull;
+
 public class ClothesForm {
 
+	@NotNull(message = "性別を選択してください。")
 	private Integer gender;
 	private String color;
 	

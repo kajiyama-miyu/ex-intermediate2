@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -31,15 +33,15 @@ public class ClothesRepository {
 	};
 	
 	
-	public Clothes findByClothes(String color, Integer gender) {
-		String sql = "SELECT id,category, genre, gender, color, price,size FROM clothes WHERE gender=:gender AND color=:color";
+	public List<Clothes> findByClothes(Integer gender, String color) {
+		String sql = "SELECT id,category, genre, gender, color, price, size FROM clothes WHERE gender=:gender AND color=:color";
 		
 		try{
 			SqlParameterSource param = new MapSqlParameterSource().addValue("gender", gender).addValue("color", color);
 			
-			Clothes clothes = template.queryForObject(sql, param, CLOTHES_ROW_MAPPER);
+			List<Clothes> clothesList = template.query(sql, param, CLOTHES_ROW_MAPPER);
 			
-			return clothes;
+			return clothesList;
 		}catch (EmptyResultDataAccessException e) {
 			// TODO: handle exception
 			

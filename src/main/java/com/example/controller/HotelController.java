@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,12 +39,19 @@ public class HotelController {
 			return index();
 		}
 		
+		
+		
 			if(hotelForm.getPrice().equals("")) {
 				List<HotelDomain> hotel= service.showAllHotels();
 				model.addAttribute("hotelList",hotel);
 				return "search-hotels";
-			} else {
-				List<HotelDomain> hotelList = service.showHotels(Integer.parseInt(hotelForm.getPrice()));
+			}
+		
+			List<HotelDomain> hotelList = service.showHotels(Integer.parseInt(hotelForm.getPrice()));
+		 if(hotelList.size()==0) {
+				model.addAttribute("failure", "検索結果が存在しませんでした。");
+				return "search-hotels";
+			} else {	
 				model.addAttribute("hotelList", hotelList);
 				return "search-hotels";
 			}

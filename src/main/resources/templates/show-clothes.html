@@ -9,6 +9,10 @@
 <h2>衣類検索</h2>
 
 <form action="show-clothes.html" th:action="@{/clothes/searchClothes}" method="post" th:object="${clothesForm}">
+<div th:if="${#fields.hasErrors('gender')}"
+	 th:errors="*{gender}"
+	 style="color:red">エラー
+</div>
 <div th:if="${failure}">
 <p th:text="${failure}">
 </div>
@@ -28,7 +32,7 @@
 </div>
 </form>
 
-<table  id="clotheTable" th:each = "clothes : ${clothesList}">
+<table  id="clotheTable" th:each = "clothes : ${session.clothesList}">
 <tr class="odd">
 <th >ジャンル</th>
 <td>

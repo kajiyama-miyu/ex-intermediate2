@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +25,9 @@ public class ClothesController {
 
 	@Autowired
 	private ClothesService service;
+	
+	@Autowired
+	private HttpSession session;
 	
 	@ModelAttribute
 	public ClothesForm setUpForm() {
@@ -48,14 +55,19 @@ public class ClothesController {
 	}
 	
 	@RequestMapping("/searchClothes")
-	public String searchColothes(ClothesForm clothesForm, Model model) {
+	public String searchColothes(@Validated ClothesForm clothesForm, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return index(model);
+		}
+		
 		List<Clothes> clothesList = service.searchClothes(clothesForm.getGender(), clothesForm.getColor());
 		
 		if(CollectionUtils.isEmpty(clothesList)) {
 			model.addAttribute("failure", "検索結果は存在しませんでした。");
 			return index(model);
 		}else {
-			model.addAttribute("clothesList", clothesList);
+			session.setAttribute("clothesList", clothesList);
 			return index(model);
 		}
 			
